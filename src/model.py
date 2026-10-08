@@ -1,5 +1,7 @@
 """The model class basic definition."""
 
+import numpy as np
+
 
 class Model:
     """The linear model class definition."""
@@ -20,7 +22,7 @@ class Model:
         self.w: float = w
         self.b: float = b
 
-    def forward(self, x: int) -> float:
+    def forward(self, x: np.ndarray) -> np.ndarray:
         """
         Forward pass of the model.
 
@@ -33,3 +35,7 @@ class Model:
                 The output of the model.
         """
         return self.w * x + self.b
+
+    def __call__(self, x: np.ndarray) -> np.ndarray:
+        """Triggers the forward call."""
+        return self.forward(x)
