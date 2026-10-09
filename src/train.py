@@ -29,7 +29,7 @@ class Train:
         self.data: np.ndarray = load_data("data.csv")
         self.x: np.ndarray = self.data[:, 0] * 1e-5
         self.y: np.ndarray = self.data[:, 1]
-        self.lr: float = 0.001
+        self.lr: float = 0.01
         self.n: int = self.y.size
         self.epochs: int = 10000
         self.target_loss = 0.01
@@ -54,7 +54,12 @@ class Train:
         self.model.b -= self.lr * np.sum(y_hat - self.y) / self.n
 
     def training_loop(self) -> None:
-        """Training loop for n Epochs."""
+        """
+        Training loop for n Epochs.
+
+        The trained parameters are saved
+        to the `weights` file.
+        """
         y_hat: np.ndarray
         loss: float
 
