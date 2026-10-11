@@ -2,6 +2,7 @@
 
 import numpy as np
 import pandas as pd
+from matplotlib import axes
 
 
 def load_data(file: str) -> np.ndarray:
@@ -46,3 +47,32 @@ def read_file(file: str) -> str:
         return res
     except Exception as e:  # noqa: BLE001
         raise SystemExit(f"Read File: {e}!")
+
+
+def plot_data(ax: axes, x: np.ndarray, y: np.ndarray) -> None:
+    """
+    Take x and y data points and plot them on ax.
+
+    Args:
+        ax: matplotlib.ax
+            sub-plot for our data
+        x: np.ndarray, y: np.ndarray
+            x, y data points
+    """
+    ax.scatter(x, y, label="Data")
+    ax.set_xlabel("Mileage")
+    ax.set_ylabel("Price")
+    ax.set_title("Car Price by Mileage")
+
+
+def plot_line(ax: axes, a: tuple, b: tuple) -> None:
+    """Plot line on plot `ax` going through points `a` and `b`."""
+    ax.axline(a, b, label="Regression Line")
+
+
+def plot_loss(ax: axes, losses: list[float], epochs: list[int]) -> None:
+    """Plot loss change through epochs."""
+    ax.plot(epochs, losses)
+    ax.set_xlabel("Epochs")
+    ax.set_ylabel("MSE Loss")
+    ax.set_title("MSE Loss per epoch.")

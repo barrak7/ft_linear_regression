@@ -1,9 +1,10 @@
 """Training program. Loads model, trains it, and stores parameters."""
 
+import matplotlib.pyplot as plt
 import numpy as np
 
 from model import Model
-from utils import load_data, write_to_file
+from utils import load_data, plot_data, plot_line, plot_loss, write_to_file
 
 
 class Train:
@@ -31,8 +32,7 @@ class Train:
         self.y: np.ndarray = self.data[:, 1]
         self.lr: float = 0.01
         self.n: int = self.y.size
-        self.epochs: int = 10000
-        self.target_loss = 0.01
+        self.epochs: int = 5000
 
     def mse(self, y_hat: np.ndarray) -> float:
         """
@@ -53,6 +53,18 @@ class Train:
         self.model.w -= self.lr * np.sum((y_hat - self.y) * self.x) / self.n
         self.model.b -= self.lr * np.sum(y_hat - self.y) / self.n
 
+    def plot(self, losses: list[float], iters: list[int]) -> None:
+        """Prepare data to be plotted."""
+        _, (data_ax, loss_ax) = plt.subplots(1, 2)
+        a: tuple = (self.x[0] * 1e5, self.model(self.x[0]))
+        b: tuple = (self.x[1] * 1e5, self.model(self.x[1]))
+
+        plot_data(data_ax, self.x * 1e5, self.y)
+        plot_line(data_ax, a, b)
+        data_ax.legend()
+        plot_loss(loss_ax, losses, iters)
+        plt.show()
+
     def training_loop(self) -> None:
         """
         Training loop for n Epochs.
@@ -62,16 +74,21 @@ class Train:
         """
         y_hat: np.ndarray
         loss: float
+        losses: list[float] = []
+        iters: list[int] = []
 
-        for _ in range(self.epochs):
+        for i in range(self.epochs):
             y_hat = self.model(self.x)
 
             loss = self.mse(y_hat)
 
-            if loss < self.target_loss:
-                break
-
             self.update_weights(y_hat)
+            if not i % 100:
+                losses.append(loss)
+                iters.append(i)
+
+        print(iters)
+        self.plot(losses, iters)
         write_to_file(f"{self.model.w} {self.model.b}", "weights")
 
 
