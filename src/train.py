@@ -87,7 +87,6 @@ class Train:
                 losses.append(loss)
                 iters.append(i)
 
-        print(iters)
         self.plot(losses, iters)
         write_to_file(f"{self.model.w} {self.model.b}", "weights")
 
