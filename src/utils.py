@@ -45,8 +45,8 @@ def read_file(file: str) -> str:
             for line in f:
                 res += line
         return res
-    except Exception as e:  # noqa: BLE001
-        raise SystemExit(f"Read File: {e}!")
+    except Exception:  # noqa: BLE001
+        return ""
 
 
 def plot_data(ax: axes, x: np.ndarray, y: np.ndarray) -> None:
