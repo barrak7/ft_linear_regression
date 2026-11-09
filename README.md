@@ -49,17 +49,17 @@ $b_t = b_{t-1} - lr \cdot \sum_{i=1}^m (y_i - \hat{y_i})$
 
 we run these updates for a number of iterations until we're satisfied with the results.
 
-we'll end up with a line like this:
+we'll end up with a line like this:\
 ![Regression Line](img/regression_line.png)
 
 It doesn't fit the data perfectly, but it gives us the best estimate for this data.
 
-Here's how our error changes through training iterations:
+Here's how our error changes through training iterations:\
 ![MSE Loss graph](img/mse_loss_update.png)
 
 We can see that the error stops changing as we get to the optima. That's because the derivative at the optima becomes very low that our training pretty much doesn't make any updates at all. That being said, even if we don't know what error value we're aiming for, we just need to set the number of iterations larg enough for our model to converge. It's also important to set the right `learning rate` so that the learning progresses steadily.
 
-For the latter, we used $lr = 0.01$, to better observe the effects of the learning rate on training. Let's change it to $0.9$
+For the latter, we used $lr = 0.01$, to better observe the effects of the learning rate on training. Let's change it to $0.9$\
 ![resutls of setting lr to a high value](img/lr09.png)
 
 We can see that it gave us a huge error that only kept getting worse, and a terrible prediction. So it's very important to choose a proper value for the learning rate.
